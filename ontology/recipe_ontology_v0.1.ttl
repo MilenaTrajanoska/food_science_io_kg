@@ -141,8 +141,20 @@
         rdfs:range xsd:string .
 
 <http://example.org/recipe-ontology#substitutes>
-        a       owl:DatatypeProperty ;
+        a       owl:ObjectProperty ;
         rdfs:comment "Specifies the substitute for an ingredient." ;
         rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
         rdfs:label "substitutes" ;
         rdfs:range <http://example.org/recipe-ontology#Ingredient> .
+
+<http://example.org/recipe-ontology#hasIngredientClass>
+        a       owl:ObjectProperty ;
+        rdfs:comment "Specifies the ingredient class (category) of the ingredient." ;
+        rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
+        rdfs:label "hasIngredientClass" ;
+        rdfs:range <http://example.org/recipe-ontology#IngredientClass> .
+
+<http://example.org/recipe-ontology#IngredientClass>
+        a       owl:Class ;
+        rdfs:comment "An ingredient class representing a food cateogry which contains individual ingredients." ;
+        rdfs:label "IngredientClass" .
