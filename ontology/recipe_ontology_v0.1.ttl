@@ -1,0 +1,148 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+<http://example.org/recipe-ontology>
+        a       owl:Ontology .
+
+<http://example.org/recipe-ontology#Course>
+    a       owl:Class ;
+    rdfs:label "Course" ;
+    rdfs:comment "A course within a meal (e.g., salad, soup, appetizer, entree, side, dessert)." .
+
+# Define Salad as a subclass of Course
+<http://example.org/recipe-ontology#Salad>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Salad" ;
+    rdfs:comment "A type of salad course." .
+
+# Define Soup as a subclass of Course
+<http://example.org/recipe-ontology#Soup>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Soup" ;
+    rdfs:comment "A type of soup course." .
+
+# Define Appetizer as a subclass of Course
+<http://example.org/recipe-ontology#Appetizer>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Appetizer" ;
+    rdfs:comment "A type of appetizer course." .
+
+# Define Entree as a subclass of Course
+<http://example.org/recipe-ontology#Entree>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Entree" ;
+    rdfs:comment "A type of entree course." .
+
+# Define Side as a subclass of Course
+<http://example.org/recipe-ontology#Side>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Side" ;
+    rdfs:comment "A type of side course." .
+
+# Define Dessert as a subclass of Course
+<http://example.org/recipe-ontology#Dessert>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Course> ;
+    rdfs:label "Dessert" ;
+    rdfs:comment "A type of dessert course." .
+
+
+<http://example.org/recipe-ontology#Ingredient>
+        a       owl:Class ;
+        rdfs:comment "An ingredient used in a recipe." ;
+        rdfs:label "Ingredient" .
+
+<http://example.org/recipe-ontology#Meal>
+        a       owl:Class ;
+        rdfs:comment "A type of meal (e.g., breakfast, lunch, dinner)." ;
+        rdfs:label "Meal" .
+
+# Define the subclasses of Meal
+<http://example.org/recipe-ontology#Breakfast>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Meal> ;
+    rdfs:label "Breakfast" .
+
+<http://example.org/recipe-ontology#Lunch>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Meal> ;
+    rdfs:label "Lunch" .
+
+<http://example.org/recipe-ontology#Dinner>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Meal> ;
+    rdfs:label "Dinner" .
+
+<http://example.org/recipe-ontology#Snack>
+    a       owl:Class ;
+    rdfs:subClassOf <http://example.org/recipe-ontology#Meal> ;
+    rdfs:label "Snack" .
+
+
+<http://example.org/recipe-ontology#Nutrient>
+        a       owl:Class ;
+        rdfs:comment "A macronutrient or micronutrient present in ingredients." ;
+        rdfs:label "Nutrient" .
+
+<http://example.org/recipe-ontology#Recipe>
+        a       owl:Class ;
+        rdfs:comment "A recipe for preparing a dish." ;
+        rdfs:label "Recipe" .
+
+<http://example.org/recipe-ontology#isForCourse>
+        a       owl:ObjectProperty ;
+        rdfs:comment "Relates a recipe to its recommended course." ;
+        rdfs:domain <http://example.org/recipe-ontology#Recipe> ;
+        rdfs:label "isForCourse" ;
+        rdfs:range <http://example.org/recipe-ontology#Course> .
+
+<http://example.org/recipe-ontology#hasIngredient>
+        a       owl:ObjectProperty ;
+        rdfs:comment "Relates a recipe to its ingredients." ;
+        rdfs:domain <http://example.org/recipe-ontology#Recipe> ;
+        rdfs:label "hasIngredient" ;
+        rdfs:range <http://example.org/recipe-ontology#Ingredient> .
+
+<http://example.org/recipe-ontology#isForMeal>
+        a       owl:ObjectProperty ;
+        rdfs:comment "Relates a recipe to the recommended meal." ;
+        rdfs:domain <http://example.org/recipe-ontology#Recipe> ;
+        rdfs:label "isForMeal" ;
+        rdfs:range <http://example.org/recipe-ontology#Meal> .
+
+<http://example.org/recipe-ontology#hasNutrient>
+        a       owl:ObjectProperty ;
+        rdfs:comment "Relates an ingredient to its nutrients." ;
+        rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
+        rdfs:label "hasNutrient" ;
+        rdfs:range <http://example.org/recipe-ontology#Nutrient> .
+
+<http://example.org/recipe-ontology#hasQuantity>
+        a       owl:DatatypeProperty ;
+        rdfs:comment "Specifies the quantity of an ingredient." ;
+        rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
+	rdfs:domain <http://example.org/recipe-ontology#Nutrient> ;
+        rdfs:label "hasQuantity" ;
+        rdfs:range xsd:decimal .
+
+<http://example.org/recipe-ontology#unitMeasure>
+        a       owl:DatatypeProperty ;
+        rdfs:comment "Specifies the unit for ingredient quantity (e.g., grams, cups, KCAL, etc.)." ;
+        rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
+	rdfs:domain <http://example.org/recipe-ontology#Nutrient> ;
+        rdfs:label "unitMeasure" ;
+        rdfs:range xsd:string .
+
+<http://example.org/recipe-ontology#substitutes>
+        a       owl:DatatypeProperty ;
+        rdfs:comment "Specifies the substitute for an ingredient." ;
+        rdfs:domain <http://example.org/recipe-ontology#Ingredient> ;
+        rdfs:label "substitutes" ;
+        rdfs:range <http://example.org/recipe-ontology#Ingredient> .
