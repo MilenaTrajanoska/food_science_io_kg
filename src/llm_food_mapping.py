@@ -50,7 +50,7 @@ if __name__ == '__main__':
     ing_names = list(ing_names)
     mapping_set = {}
 
-    for i in tqdm.tqdm(range(370, len(ing_names), 10)):
+    for i in tqdm.tqdm(range(0, len(ing_names), 10)):
         ing_to_map = ing_names[i:i+10]
         try:
             ingredient_mapping = generate_food_class_mapping(ing_to_map, food_classes)
