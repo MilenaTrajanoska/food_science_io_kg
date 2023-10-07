@@ -1,21 +1,15 @@
 from rdflib import Graph, BNode, Literal
 from rdflib.namespace import RDF, XSD, RDFS
 import numpy as np
-import tqdm
 
-from config import (
-    KG_PATH, 
-    FORMAT,
-    PREFIX, 
-    DATA_PATH
-)
+from config import ProjectConfig
 
-from src.common.utils import (
+from common.utils import (
     load_json_contents_from_file,
     load_pickle_contents_from_file
 )
 
-from src.common.namespaces import (
+from common.namespaces import (
    RecipeNamespace
 )
 
@@ -32,12 +26,12 @@ def calculate_quantity(qty):
 
 
 if __name__ == '__main__':
-  data = load_json_contents_from_file(f"{DATA_PATH}/recipe_1m/1k.json")
-  mapping_dict = load_pickle_contents_from_file(f"{DATA_PATH}/food_mapping.pkl")
+  data = load_json_contents_from_file(f"{ProjectConfig.data_path}/recipe_1m/1k.json")
+  mapping_dict = load_pickle_contents_from_file(f"{ProjectConfig.data_path}/food_mapping.pkl")
   g = Graph()
-  g.parse(f"{KG_PATH}/recipe_ontology_v1.0.ttl", format=FORMAT)
+  g.parse(f"{ProjectConfig.ontology_dir}/recipe_ontology_v1.0.ttl", format=ProjectConfig.kg_format)
   
-  ns = RecipeNamespace(PREFIX) 
+  ns = RecipeNamespace(ProjectConfig.kg_prefix) 
   
   food_class_nodes = []
   for s, p, o in g.triples((None, RDF.type, ns.ingredient_class_type)):
@@ -88,4 +82,4 @@ if __name__ == '__main__':
         if match_fc:
             g.add((b_ingredient, ns.has_ingredient_class, match_fc))
     
-    g.serialize(destination=f"{KG_PATH}/recipe_ontology_v2.0.ttl", format=FORMAT)
+    g.serialize(destination=f"{ProjectConfig.ontology_dir}/recipe_ontology_v2.0.ttl", format=ProjectConfig.kg_format)

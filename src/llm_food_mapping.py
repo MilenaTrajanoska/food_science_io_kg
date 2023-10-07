@@ -4,9 +4,7 @@ import time
 import tqdm
 from dotenv import load_dotenv
 
-from config import (
-    DATA_PATH
-)
+from config import ProjectConfig
 
 from common.utils import (
     load_json_contents_from_file,
@@ -14,7 +12,7 @@ from common.utils import (
     save_pickle_contents_to_file
 )
 
-from common.prompts import (
+from common.mapping_prompts import (
     SYSTEM_PROMPT,
     USER_PROMPT
 )
@@ -26,7 +24,8 @@ def generate_food_class_mapping(ingredients, food_classes):
     messages=[
       {
           "role": "system",
-           "content": SYSTEM_PROMPT},
+           "content": SYSTEM_PROMPT
+      },
       {
           "role": "user", 
           "content": USER_PROMPT.format(food_classses=food_classes, ingredients=ingredients)
@@ -39,8 +38,8 @@ def generate_food_class_mapping(ingredients, food_classes):
 
 if __name__ == '__main__':
     load_dotenv()
-    data = load_json_contents_from_file(f"{DATA_PATH}/recipe_1m/1k.json")
-    food_classes = load_pickle_contents_from_file(f"{DATA_PATH}/food_classes.pkl")
+    data = load_json_contents_from_file(f"{ProjectConfig.data_path}/recipe_1m/1k.json")
+    food_classes = load_pickle_contents_from_file(f"{ProjectConfig.data_path}/food_classes.pkl")
 
     ing_names = set()
     for d in data:
@@ -55,8 +54,8 @@ if __name__ == '__main__':
         try:
             ingredient_mapping = generate_food_class_mapping(ing_to_map, food_classes)
             mapping_set.update(ingredient_mapping)
-            save_pickle_contents_to_file(f"{DATA_PATH}/food_mapping.pkl", mapping_set)
+            save_pickle_contents_to_file(f"{ProjectConfig.data_path}/food_mapping.pkl", mapping_set)
         except Exception as e:
             print(e)
 
-        time.sleep(10)  # aviod rate limit
+        time.sleep(20)  # aviod rate limit

@@ -2,10 +2,14 @@ import streamlit as st
 import os
 import openai
 from common.chat_prompt import CHAT_PROMPT, USER_PROMPT
-from common.sparql_queries import ingredients_having_at_least_15_g_protein, recipes_with_less_than_50_g_carbohydrates
+from common.sparql_queries import (
+    ingredients_having_at_least_15_g_protein, 
+    recipes_with_less_than_50_g_carbohydrates
+)
+from common.enumerations import EntityType
 from templates.htmlTemplates import css
 from dotenv import load_dotenv
-from config import KG_PATH, ENDPOINT
+from config import ProjectConfig
 import requests
 
 import logging
@@ -37,21 +41,21 @@ def generate_sparql(user_question):
 
 def get_response_type(response):
     if 'recipeName' in response[0].keys():
-        return 'recipe'
+        return EntityType.RECIPE
     elif 'ingredientName' in response[0].keys():
-        return 'ingredient'
+        return EntityType.INGREDIENT
     else:
-        return 'unknown'
+        return EntityType.UNKNOWN
 
 
 def display_response_by_type(element, response_type):
-    if response_type == 'recipe':
+    if response_type == EntityType.RECIPE:
         st.header(element.get("recipeName", ""))
         st.write(element.get("description", ""))
         st.write(element.get("link", ""))
-    elif response_type == 'ingredient':
+    elif response_type == EntityType.INGREDIENT:
         st.header(element.get("ingredientName", ""))
-        st.write(f"{element.get('nutrientName', '')} : {element.get('nutrientQuantity', '0')} grams")
+        st.write(f"{element.get('nutrientName', '')}: {element.get('nutrientQuantity', '0')} grams")
 
 
 def handle_result(response):
@@ -65,7 +69,7 @@ def handle_result(response):
 
 def set_session():
     if "ontology" not in st.session_state:
-        ttl_file = open(f'{KG_PATH}/recipe_ontology_v0.1.ttl','r')
+        ttl_file = open(ProjectConfig.basic_ontology_path,'r')
         st.session_state.ontology = ttl_file.read()
 
 
@@ -85,7 +89,7 @@ def main():
             query = generate_sparql(user_question)
             logging.info(query)
            
-            response = requests.get(ENDPOINT, params={'query': query})
+            response = requests.get(ProjectConfig.sparql_endpoint, params={'query': query})
             logging.info(response.status_code)
             logging.info(response.json())
 

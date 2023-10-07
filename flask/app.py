@@ -1,9 +1,8 @@
 from flask import Flask, request, jsonify
 from rdflib import Graph
 
-
 rdf_graph = Graph()
-rdf_graph.parse("../ontology/recipe_ontology_v2.0_small_extended.ttl", format="turtle") 
+rdf_graph.parse("./kg/recipe_ontology_v2.0_small_extended.ttl", format="turtle") 
 
 
 app = Flask(__name__)

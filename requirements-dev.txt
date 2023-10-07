@@ -1,0 +1,8 @@
+rdflib==7.0.0
+openai==0.28.1
+pandas==2.1.1
+numpy==1.26.0
+tqdm==4.66.1
+python-dotenv==1.0.0
+streamlit==1.27.2
+Flask==3.0.0

@@ -1,6 +1,5 @@
 import json
 import pickle
-import openai
 
 
 def load_json_contents_from_file(file_path):

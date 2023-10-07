@@ -1,30 +1,24 @@
 from rdflib import Graph, URIRef, BNode, Literal, Namespace
 from rdflib.namespace import RDF, XSD, RDFS
 import pandas as pd
-import pickle
 
-from config import (
-    KG_PATH, 
-    FORMAT,
-    PREFIX, 
-    DATA_PATH
-)
+from config import ProjectConfig
 
-from src.common.utils import (
+from common.utils import (
     save_pickle_contents_to_file
 )
 
-from src.common.namespaces import (
+from common.namespaces import (
    RecipeNamespace
 )
 
 
-NUTRIENT_DATA_PATH = f"{DATA_PATH}/food_nutrients"
+NUTRIENT_DATA_PATH = f"{ProjectConfig.data_path}/food_nutrients"
 
 
 if __name__ == '__main__':
     g = Graph()
-    g.parse(f"{KG_PATH}/recipe_ontology_v0.1.ttl", format=FORMAT)
+    g.parse(ProjectConfig.basic_ontology_path, format=ProjectConfig.kg_format)
     food_data = pd.read_csv(f'{NUTRIENT_DATA_PATH}/food.csv')
     food_data = food_data[food_data['data_type'] == 'foundation_food']
 
@@ -43,7 +37,7 @@ if __name__ == '__main__':
     food_ids = food_nutrient_merge.fdc_id.unique()
     nutrient_ids = food_nutrient_merge.id.unique()
 
-    ns = RecipeNamespace(PREFIX)
+    ns = RecipeNamespace(ProjectConfig.kg_prefix)
 
     for i, row in food_nutrient_merge.iterrows():
         food_id = row[0]
@@ -66,7 +60,7 @@ if __name__ == '__main__':
 
         g.add((b_ingr, ns.has_nutrient_prop, b_nutr))
 
-    g.serialize(destination=f"{KG_PATH}/recipe_ontology_v1.0.ttl", format=FORMAT)
+    g.serialize(destination=f"{ProjectConfig.ontology_dir}/recipe_ontology_v1.0.ttl", format=ProjectConfig.kg_format)
     
     food_classes = food_nutrient_merge.description.unique()
-    save_pickle_contents_to_file(f'{DATA_PATH}/food_classes.pkl', food_classes)
+    save_pickle_contents_to_file(f'{ProjectConfig.data_path}/food_classes.pkl', food_classes)
