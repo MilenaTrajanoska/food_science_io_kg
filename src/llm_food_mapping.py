@@ -8,13 +8,13 @@ from config import (
     DATA_PATH
 )
 
-from src.common.utils import (
+from common.utils import (
     load_json_contents_from_file,
     load_pickle_contents_from_file,
     save_pickle_contents_to_file
 )
 
-from src.common.prompts import (
+from common.prompts import (
     SYSTEM_PROMPT,
     USER_PROMPT
 )

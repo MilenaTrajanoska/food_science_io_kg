@@ -1,5 +1,6 @@
 import json
 import pickle
+import openai
 
 
 def load_json_contents_from_file(file_path):
@@ -14,3 +15,4 @@ def load_pickle_contents_from_file(file_path):
 def save_pickle_contents_to_file(file_path, content):
     with open(file_path, 'wb') as f:
         pickle.dump(content, f)
+        

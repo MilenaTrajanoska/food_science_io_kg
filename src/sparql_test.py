@@ -1,6 +1,6 @@
 from rdflib import Graph
 
-from src.common.sparql_queries import ingredients_having_at_least_15_g_protein as query
+from common.sparql_queries import recipes_with_less_than_50_g_carbohydrates as query
 
 from config import (
     KG_PATH,
@@ -10,7 +10,7 @@ from config import (
 
 if __name__ == '__main__':
     g = Graph()
-    g.parse(f"{KG_PATH}/recipe_ontology_v1.0.ttl", format=FORMAT)
+    g.parse(f"{KG_PATH}/recipe_ontology_v2.0_small.ttl", format=FORMAT)
     qres = g.query(query)
 
     for res in qres:
