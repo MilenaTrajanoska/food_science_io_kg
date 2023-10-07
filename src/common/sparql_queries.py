@@ -1,20 +1,20 @@
 ingredients_having_at_least_15_g_protein = """
-SELECT DISTINCT ?ingredient ?ingredientLabel ?amount ?nutrient ?nutrientName
+SELECT DISTINCT ?ingredient ?ingredientName ?nutrientQuantity ?nutrient ?nutrientName
 WHERE {
   ?ingredient a <http://example.org/recipe-ontology#IngredientClass> ;
-          rdfs:label ?ingredientLabel ;
+          rdfs:label ?ingredientName ;
           <http://example.org/recipe-ontology#hasNutrient> ?nutrient .
 
-  ?nutrient <http://example.org/recipe-ontology#hasQuantity> ?amount ;
+  ?nutrient <http://example.org/recipe-ontology#hasQuantity> ?nutrientQuantity ;
             rdfs:label ?nutrientName;
             <http://example.org/recipe-ontology#unitMeasure> ?measure .
 
-  FILTER (?measure = "G" && xsd:decimal(?amount) >= 15.0 && CONTAINS(?nutrientName, 'Protein'))
+  FILTER (?measure = "G" && xsd:decimal(?nutrientQuantity) >= 15.0 && CONTAINS(?nutrientName, 'Protein'))
 }
 """
 
 recipes_with_less_than_50_g_carbohydrates = """
-SELECT DISTINCT ?recipeName ?description ?link (SUM(?totalCarbohydrates) as ?totalAmount)
+SELECT DISTINCT ?recipeName ?description ?link (SUM(?totalQuantity) as ?nutrientValueTotal)
 WHERE {
   ?recipe a <http://example.org/recipe-ontology#Recipe> ;
           rdfs:label ?recipeName ;
@@ -32,7 +32,7 @@ WHERE {
             rdfs:label ?nutrientName;
             <http://example.org/recipe-ontology#unitMeasure> ?measure .
   
-   BIND(?quantity * COALESCE(?conversionFactor, 1) * ?nutrientQuantity AS ?totalCarbohydrates)
+   BIND(?quantity * COALESCE(?conversionFactor, 1) * ?nutrientQuantity AS ?totalQuantity)
     
    FILTER (?measure = "G" && CONTAINS(?nutrientName, 'Carbohydrate'))
     
@@ -45,8 +45,6 @@ WHERE {
 }
 
 GROUP BY ?recipeName ?description ?link
-HAVING (SUM(?totalCarbohydrates) < 50.0)
+HAVING (SUM(?totalQuantity) < 50.0)
 """
-
-  
   

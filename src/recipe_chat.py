@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 def generate_sparql(user_question):
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
+        temperature=0,
         messages=[
         {
             "role": "system",
@@ -34,14 +35,32 @@ def generate_sparql(user_question):
     return completion.choices[0]['message']['content']
 
 
+def get_response_type(response):
+    if 'recipeName' in response[0].keys():
+        return 'recipe'
+    elif 'ingredientName' in response[0].keys():
+        return 'ingredient'
+    else:
+        return 'unknown'
+
+
+def display_response_by_type(element, response_type):
+    if response_type == 'recipe':
+        st.header(element.get("recipeName", ""))
+        st.write(element.get("description", ""))
+        st.write(element.get("link", ""))
+    elif response_type == 'ingredient':
+        st.header(element.get("ingredientName", ""))
+        st.write(f"{element.get('nutrientName', '')} : {element.get('nutrientQuantity', '0')} grams")
+
+
 def handle_result(response):
     if type(response) != list or len(response) == 0:
         st.write("No recipes were identified for your question")
     else:
+        response_type = get_response_type(response)
         for recipe in response:
-            st.header(recipe.get("recipeName", ""))
-            st.write(recipe.get("description", ""))
-            st.write(recipe.get("link", ""))
+            display_response_by_type(recipe, response_type)
 
 
 def set_session():

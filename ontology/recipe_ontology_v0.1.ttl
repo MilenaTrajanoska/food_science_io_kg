@@ -18,10 +18,19 @@
     <http://example.org/recipe-ontology#unitTo> "G"^^xsd:string ;
     <http://example.org/recipe-ontology#conversionFactor> "150"^^xsd:decimal .
 
+<http://example.org/recipe-ontology#PinchToGramConversion>
+    a <http://example.org/recipe-ontology#UnitConversion> ;
+    <http://example.org/recipe-ontology#unitFrom> "pinch"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitFrom> "pinches"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitFrom> "Pinch"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitTo> "G"^^xsd:string ;
+    <http://example.org/recipe-ontology#conversionFactor> "0.35"^^xsd:decimal .
+
 <http://example.org/recipe-ontology#TeaspoonToGramConversion>
     a <http://example.org/recipe-ontology#UnitConversion> ;
     <http://example.org/recipe-ontology#unitFrom> "teaspoon"^^xsd:string ;
-        <http://example.org/recipe-ontology#unitFrom> "teaspoons"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitFrom> "teaspoons"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitFrom> "tsp"^^xsd:string ;
     <http://example.org/recipe-ontology#unitTo> "G"^^xsd:string ;
     <http://example.org/recipe-ontology#conversionFactor> "4.2"^^xsd:decimal .
 
@@ -29,6 +38,7 @@
     a <http://example.org/recipe-ontology#UnitConversion> ;
     <http://example.org/recipe-ontology#unitFrom> "tablespoon"^^xsd:string ;
     <http://example.org/recipe-ontology#unitFrom> "tablespoons"^^xsd:string ;
+    <http://example.org/recipe-ontology#unitFrom> "tbsp"^^xsd:string ;
     <http://example.org/recipe-ontology#unitTo> "G"^^xsd:string ;
     <http://example.org/recipe-ontology#conversionFactor> "14.175"^^xsd:decimal .
 
