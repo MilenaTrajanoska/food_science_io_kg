@@ -11,6 +11,24 @@
         rdfs:comment "A conversion class from one unit to another." ;
         rdfs:label "Conversion" .
 
+<http://example.org/recipe-ontology#unitFrom> a owl:DatatypeProperty ;
+        rdsf:label "Unit from" ;
+        rdfs:comment "A property representing the source unit for conversion" ;
+        rdfs:domain <http://example.org/recipe-ontology#UnitConversion> ;
+        rdfs:range xsd:string .
+
+<http://example.org/recipe-ontology#unitTo> a owl:DatatypeProperty ;
+        rdsf:label "Unit to" ;
+        rdfs:comment "A property representing the target unit for conversion" ;
+        rdfs:domain <http://example.org/recipe-ontology#UnitConversion> ;
+        rdfs:range xsd:string .
+
+<http://example.org/recipe-ontology#conversionFactor> a owl:DatatypeProperty ;
+        rdsf:label "Conversion factor" ;
+        rdfs:comment "A property representing the conversion factor from a source to a target unit" ;
+        rdfs:domain <http://example.org/recipe-ontology#UnitConversion> ;
+        rdfs:range xsd:decimal .
+
 <http://example.org/recipe-ontology#CupToGramConversion>
     a <http://example.org/recipe-ontology#UnitConversion> ;
     <http://example.org/recipe-ontology#unitFrom> "cup"^^xsd:string ;
