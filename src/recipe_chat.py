@@ -99,5 +99,5 @@ def main():
 
 if __name__ == '__main__':
     if os.getenv("ENVIRON") != 'prod':
-        load_dotenv()
+        load_dotenv("../.env.dev")
     main()

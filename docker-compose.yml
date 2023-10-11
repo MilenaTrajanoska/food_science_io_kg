@@ -1,0 +1,22 @@
+services:
+  streamlit-app:
+    build:
+      context: ./src
+    ports:
+      - "8501:8501"
+    depends_on:
+      - flask-app
+    environment:
+      - SPARQL_ENDPOINT=${SPARQL_ENDPOINT}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENVIRON=${ENVIRON}
+  flask-app:
+    build: 
+      context: ./flask
+    ports:
+      - "5000:5000"
+  # blazegraph:
+  #   build:
+  #     context: ./blazegraph
+  #   ports:
+  #     - "8080:8080"
