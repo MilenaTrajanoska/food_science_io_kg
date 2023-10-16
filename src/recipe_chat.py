@@ -74,13 +74,13 @@ def set_session():
 
 
 def main():
-    st.set_page_config(page_title="Chat with knowledge graph",
+    st.set_page_config(page_title="RecipeKG Bot",
                        page_icon=":stew:")
     st.write(css, unsafe_allow_html=True)
 
     set_session()
 
-    st.header("Knowledge Graph Bot :stew:")
+    st.header("RecipeKG Bot :stew:")
     with st.form("formid"):
         user_question = st.text_input("Ask for a specific recipe or ingredient")
         submitted = st.form_submit_button("Send")
